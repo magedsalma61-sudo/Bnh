@@ -1,6 +1,6 @@
 import './globals.css'
 import React from 'react'
-
+import { CartProvider } from './CartContext'
 export const metadata = {
   title: 'BNH Egypt',
   description: 'Premium e-commerce store - BNH Egypt'
@@ -10,6 +10,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ar" dir="rtl">
       <body>
+        <CartProvider>
+    <div className="min-h-screen flex flex-col bg-[#fafafa]">
         <div className="min-h-screen flex flex-col bg-[#fafafa]">
           <header className="border-b border-gray-200 bg-white shadow-sm">
             <div className="container py-4">
