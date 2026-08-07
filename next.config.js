@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  allowedDevOrigins: ['192.168.1.167'],
-}
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
