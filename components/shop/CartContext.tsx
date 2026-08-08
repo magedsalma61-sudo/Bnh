@@ -1,6 +1,12 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 type CartItem = {
   id: string
@@ -22,14 +28,19 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined)
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export function CartProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [cart, setCart] = useState<CartItem[]>([])
 
   useEffect(() => {
-    const stored = localStorage.getItem('bnh-cart')
-    if (stored) {
+    const saved = localStorage.getItem('bnh-cart')
+
+    if (saved) {
       try {
-        setCart(JSON.parse(stored))
+        setCart(JSON.parse(saved))
       } catch {
         setCart([])
       }
@@ -42,11 +53,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
-      const existing = prev.find((entry) => entry.id === item.id)
+      const existing = prev.find((cartItem) => cartItem.id === item.id)
+
       if (existing) {
-        return prev.map((entry) => (entry.id === item.id ? { ...entry, quantity: entry.quantity + 1 } : entry))
+        return prev.map((cartItem) =>
+          cartItem.id === item.id
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + item.quantity,
+              }
+            : cartItem
+        )
       }
-      return [...prev, { ...item, quantity: 1 }]
+
+      return [...prev, item]
     })
   }
 
@@ -55,17 +75,38 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const updateQuantity = (id: string, quantity: number) => {
-    setCart((prev) => prev.map((item) => (item.id === id ? { ...item, quantity: Math.max(0, quantity) } : item)).filter((item) => item.quantity > 0))
+    if (quantity <= 0) {
+      removeFromCart(id)
+      return
+    }
+
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    )
   }
 
   const clearCart = () => {
     setCart([])
   }
 
-  const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart])
+  const totalItems = useMemo(
+    () => cart.reduce((sum, item) => sum + item.quantity, 0),
+    [cart]
+  )
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, totalItems }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        totalItems,
+      }}
+    >
       {children}
     </CartContext.Provider>
   )
@@ -73,8 +114,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
 export function useCart() {
   const context = useContext(CartContext)
+
   if (!context) {
     throw new Error('useCart must be used inside CartProvider')
   }
+
   return context
 }
