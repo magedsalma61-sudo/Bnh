@@ -1,3 +1,4 @@
+
 'use client'
 
 import React from 'react'
@@ -25,7 +26,7 @@ const services: Service[] = [
     description:
       'احجز استشارتك أونلاين مع د. محمد رحيم من أي مكان.',
     icon: '💻',
-    href: '/services/booking',
+    href: '/services/online-booking',
   },
   {
     id: 'medications',
@@ -44,10 +45,8 @@ export default function ServicesPage() {
       className="min-h-screen bg-[#F8F6F8] text-[#183B56]"
     >
       {/* HEADER */}
-
       <section className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6FC] text-3xl">
             🩺
           </div>
@@ -60,23 +59,18 @@ export default function ServicesPage() {
             تعرف على الخدمات التي نقدمها في مراكز
             د. محمد رحيم، واختر الخدمة المناسبة لك.
           </p>
-
         </div>
       </section>
 
       {/* SERVICES */}
-
       <section className="py-10 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-
           <div className="grid gap-6 md:grid-cols-3">
-
             {services.map((service) => (
               <div
                 key={service.id}
                 className="group flex flex-col rounded-3xl border border-[#DCEAF3] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EAF6FC] text-3xl transition group-hover:scale-105">
                   {service.icon}
                 </div>
@@ -95,25 +89,17 @@ export default function ServicesPage() {
                 >
                   احجز الآن
                 </a>
-
               </div>
             ))}
-
           </div>
-
         </div>
       </section>
 
       {/* WHATSAPP */}
-
       <section className="pb-14">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
-
           <div className="rounded-3xl bg-[#183B56] p-8 text-center text-white shadow-xl sm:p-10">
-
-            <div className="text-4xl">
-              💬
-            </div>
+            <div className="text-4xl">💬</div>
 
             <h2 className="mt-4 text-2xl font-black">
               محتاج مساعدة في اختيار الخدمة؟
@@ -132,18 +118,14 @@ export default function ServicesPage() {
             >
               تواصل معنا عبر واتساب
             </a>
-
           </div>
-
         </div>
       </section>
 
       {/* FOOTER */}
-
       <footer className="border-t border-gray-200 bg-white py-6 text-center text-sm text-gray-500">
         Dr. Mohamed Rohayem — جميع الحقوق محفوظة
       </footer>
-
     </main>
   )
 }
